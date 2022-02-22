@@ -11,8 +11,8 @@ expeditor:
       env:
         HAB_ORIGIN: "habitat-testing" # just to be safe
         HAB_BLDR_URL: "https://bldr.habitat.sh"
-        HAB_BLDR_CHANNEL: "dev"
-        HAB_INTERNAL_BLDR_CHANNEL: "dev"
+        HAB_BLDR_CHANNEL: "mac_m1_hab"
+        HAB_INTERNAL_BLDR_CHANNEL: "mac_m1_hab"
 
 steps:
 #######################################################################
@@ -22,7 +22,7 @@ steps:
   - label: ":docker: Docker End-to-End Supervisor Tests"
     command:
       - cd test/end-to-end/multi-supervisor
-      - ./run_all.sh dev
+      - ./run_all.sh mac_m1_hab
     expeditor:
       executor:
         linux:
@@ -32,7 +32,7 @@ steps:
 
   - label: "[:linux: test_hab_help_doesnt_install_hab_sup]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_hab_help_doesnt_install_hab_sup
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_hab_help_doesnt_install_hab_sup
     artifact_paths:
       - "*.log"
     expeditor:
@@ -44,7 +44,7 @@ steps:
 
   - label: "[:linux: hup-does-not-abandon-services]"
     command:
-      - .expeditor/scripts/end_to_end/setup_environment.sh dev
+      - .expeditor/scripts/end_to_end/setup_environment.sh mac_m1_hab
       - hab pkg install --binlink --channel=stable core/expect
       - hab pkg install --channel=\$HAB_BLDR_CHANNEL core/hab-sup core/hab-launcher
       - test/end-to-end/hup-does-not-abandon-services.exp
@@ -57,7 +57,7 @@ steps:
 
   - label: "[:linux: hab-svc-load]"
     command:
-      - .expeditor/scripts/end_to_end/setup_environment.sh dev
+      - .expeditor/scripts/end_to_end/setup_environment.sh mac_m1_hab
       - hab pkg install --binlink --channel=stable core/expect
       - hab pkg install --channel=\$HAB_BLDR_CHANNEL core/hab-sup core/hab-launcher
       - test/end-to-end/hab-svc-load.exp
@@ -70,7 +70,7 @@ steps:
 
   - label: "[:windows: hab-svc-load]"
     command:
-      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 dev test_supervisor_load_service
+      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 mac_m1_hab test_supervisor_load_service
     artifact_paths:
       - "*.log"
     expeditor:
@@ -86,7 +86,7 @@ steps:
 
   - label: "[:windows: Start-Service]"
     command:
-      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 dev test_supervisor_windows_service
+      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 mac_m1_hab test_supervisor_windows_service
     artifact_paths:
       - "*.log"
     expeditor:
@@ -102,7 +102,7 @@ steps:
 
   - label: "[:windows: cleanly-shutdown-supervisor]"
     command:
-      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 dev test_supervisor_windows_shutdown
+      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 mac_m1_hab test_supervisor_windows_shutdown
     artifact_paths:
       - "*.log"
     expeditor:
@@ -118,7 +118,7 @@ steps:
 
   - label: "[:windows: hab-svc-load-with-svc-user]"
     command:
-      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 dev test_supervisor_load_service_with_password
+      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 mac_m1_hab test_supervisor_load_service_with_password
     artifact_paths:
       - "*.log"
     expeditor:
@@ -134,7 +134,7 @@ steps:
 
   - label: "[:windows: test_supervisor_binds]"
     command:
-      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 dev test_supervisor_binds
+      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 mac_m1_hab test_supervisor_binds
     artifact_paths:
       - "*.log"
     expeditor:
@@ -150,7 +150,7 @@ steps:
 
   - label: "[:linux: test_supervisor_binds]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_supervisor_binds
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_supervisor_binds
     artifact_paths:
       - "*.log"
     expeditor:
@@ -159,12 +159,12 @@ steps:
           privileged: true
           environment:
             - BUILD_PKG_TARGET=x86_64-linux
-            - HAB_STUDIO_SECRET_HAB_INTERNAL_BLDR_CHANNEL="dev"
-            - HAB_STUDIO_SECRET_CI_OVERRIDE_CHANNEL="dev"
+            - HAB_STUDIO_SECRET_HAB_INTERNAL_BLDR_CHANNEL="mac_m1_hab"
+            - HAB_STUDIO_SECRET_CI_OVERRIDE_CHANNEL="mac_m1_hab"
 
   - label: "[:windows: test_supervisor_term]"
     command:
-      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 dev test_supervisor_term
+      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 mac_m1_hab test_supervisor_term
     artifact_paths:
       - "*.log"
     expeditor:
@@ -177,7 +177,7 @@ steps:
 
   - label: "[:linux: test_supervisor_term]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_supervisor_term
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_supervisor_term
     artifact_paths:
       - "*.log"
     expeditor:
@@ -186,12 +186,12 @@ steps:
           privileged: true
           environment:
             - BUILD_PKG_TARGET=x86_64-linux
-            - HAB_STUDIO_SECRET_HAB_INTERNAL_BLDR_CHANNEL="dev"
-            - HAB_STUDIO_SECRET_CI_OVERRIDE_CHANNEL="dev"
+            - HAB_STUDIO_SECRET_HAB_INTERNAL_BLDR_CHANNEL="mac_m1_hab"
+            - HAB_STUDIO_SECRET_CI_OVERRIDE_CHANNEL="mac_m1_hab"
 
   - label: "[:windows: hab-svc-load-with-hab-user]"
     command:
-      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 dev test_supervisor_load_with_hab_user
+      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 mac_m1_hab test_supervisor_load_with_hab_user
     artifact_paths:
       - "*.log"
     expeditor:
@@ -207,7 +207,7 @@ steps:
 
   - label: "[:linux: test_launcher_checks_supervisor_version]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_launcher_checks_supervisor_version
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_launcher_checks_supervisor_version
     artifact_paths:
       - "*.log"
     soft_fail: true
@@ -217,12 +217,12 @@ steps:
           privileged: true
           environment:
             - BUILD_PKG_TARGET=x86_64-linux
-            - HAB_STUDIO_SECRET_HAB_INTERNAL_BLDR_CHANNEL="dev"
-            - HAB_STUDIO_SECRET_CI_OVERRIDE_CHANNEL="dev"
+            - HAB_STUDIO_SECRET_HAB_INTERNAL_BLDR_CHANNEL="mac_m1_hab"
+            - HAB_STUDIO_SECRET_CI_OVERRIDE_CHANNEL="mac_m1_hab"
 
   - label: "[:linux: test_launcher_exits_on_supervisor_connection_failure]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_launcher_exits_on_supervisor_connection_failure
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_launcher_exits_on_supervisor_connection_failure
     artifact_paths:
       - "*.log"
     expeditor:
@@ -234,7 +234,7 @@ steps:
 
   - label: "[:linux: test_launcher_exits_on_supervisor_startup_failure]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_launcher_exits_on_supervisor_startup_failure
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_launcher_exits_on_supervisor_startup_failure
     artifact_paths:
       - "*.log"
     expeditor:
@@ -246,7 +246,7 @@ steps:
 
   - label: "[:linux: test_supervisor_restarts]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_supervisor_restarts
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_supervisor_restarts
     artifact_paths:
       - "*.log"
     expeditor:
@@ -258,7 +258,7 @@ steps:
 
   - label: "[:linux: test_socket_file_cleanup]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_socket_file_cleanup
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_socket_file_cleanup
     artifact_paths:
       - "*.log"
     expeditor:
@@ -270,7 +270,7 @@ steps:
 
   - label: "[:linux: test_tar_export]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_tar_export
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_tar_export
     artifact_paths:
       - "*.log"
     expeditor:
@@ -282,7 +282,7 @@ steps:
 
   - label: "[:windows: test_tar_export]"
     command:
-      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 dev test_tar_export
+      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 mac_m1_hab test_tar_export
     artifact_paths:
       - "*.log"
     expeditor:
@@ -298,7 +298,7 @@ steps:
 
   - label: "[:linux: test_studio_auto_installs]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_studio_auto_installs
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_studio_auto_installs
     artifact_paths:
       - "*.log"
     expeditor:
@@ -312,7 +312,7 @@ steps:
 
   - label: "[:linux: test_studio_with_ssl_cert_file_envvar_set]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_studio_with_ssl_cert_file_envvar_set
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_studio_with_ssl_cert_file_envvar_set
     artifact_paths:
       - "*.log"
     expeditor:
@@ -326,7 +326,7 @@ steps:
 
   - label: "[:windows: test_studio_with_ssl_cert_file_envvar_set]"
     command:
-      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 dev test_studio_with_ssl_cert_file_envvar_set
+      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 mac_m1_hab test_studio_with_ssl_cert_file_envvar_set
     artifact_paths:
       - "*.log"
     expeditor:
@@ -343,7 +343,7 @@ steps:
 
   - label: "[:linux: :docker: test_studio_with_ssl_cert_file_envvar_set]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_studio_with_ssl_cert_file_envvar_set
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_studio_with_ssl_cert_file_envvar_set
     artifact_paths:
       - "*.log"
     env:
@@ -357,7 +357,7 @@ steps:
 
   - label: "[:windows: test_studio_version]"
     command:
-      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 dev test_studio_version
+      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 mac_m1_hab test_studio_version
     artifact_paths:
       - "*.log"
     expeditor:
@@ -374,7 +374,7 @@ steps:
 
   - label: "[:windows: 2019 :docker: test_studio_version]"
     command:
-      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 dev test_studio_version
+      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 mac_m1_hab test_studio_version
     artifact_paths:
       - "*.log"
     env:
@@ -389,7 +389,7 @@ steps:
 
   - label: "[:windows: 2016 :docker: test_studio_version]"
     command:
-      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 dev test_studio_version
+      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 mac_m1_hab test_studio_version
     artifact_paths:
       - "*.log"
     env:
@@ -405,7 +405,7 @@ steps:
 
   - label: "[:linux: test_studio_version]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_studio_version
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_studio_version
     artifact_paths:
       - "*.log"
     expeditor:
@@ -416,17 +416,17 @@ steps:
             - BUILD_PKG_TARGET=x86_64-linux
             - HAB_BLDR_URL
             - HAB_ORIGIN
-            - HAB_STUDIO_SECRET_HAB_INTERNAL_BLDR_CHANNEL=dev
+            - HAB_STUDIO_SECRET_HAB_INTERNAL_BLDR_CHANNEL=mac_m1_hab
 
   - label: "[:linux: :docker: test_studio_version]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_studio_version
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_studio_version
     artifact_paths:
       - "*.log"
     env:
       BUILD_PKG_TARGET: x86_64-linux
       DOCKER_STUDIO_TEST: true
-      HAB_STUDIO_SECRET_HAB_INTERNAL_BLDR_CHANNEL: dev
+      HAB_STUDIO_SECRET_HAB_INTERNAL_BLDR_CHANNEL: mac_m1_hab
     expeditor:
       executor:
         linux:
@@ -435,7 +435,7 @@ steps:
 
   - label: "[:windows: test_studio_supervisor]"
     command:
-      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 dev test_studio_supervisor
+      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 mac_m1_hab test_studio_supervisor
     artifact_paths:
       - "*.log"
     expeditor:
@@ -452,7 +452,7 @@ steps:
 
   - label: "[:windows: :docker: test_studio_supervisor]"
     command:
-      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 dev test_studio_supervisor
+      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 mac_m1_hab test_studio_supervisor
     artifact_paths:
       - "*.log"
     env:
@@ -467,7 +467,7 @@ steps:
 
   - label: "[:windows: test_studio_profile]"
     command:
-      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 dev test_studio_profile
+      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 mac_m1_hab test_studio_profile
     artifact_paths:
       - "*.log"
     expeditor:
@@ -484,7 +484,7 @@ steps:
 
   - label: "[:windows: :docker: test_studio_profile]"
     command:
-      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 dev test_studio_profile
+      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 mac_m1_hab test_studio_profile
     artifact_paths:
       - "*.log"
     env:
@@ -500,7 +500,7 @@ steps:
 
   - label: "[:linux: test_fresh_install_can_communicate_with_builder]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_fresh_install_can_communicate_with_builder
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_fresh_install_can_communicate_with_builder
     artifact_paths:
       - "*.log"
     expeditor:
@@ -513,7 +513,7 @@ steps:
 
   - label: "[:linux: test_studio_can_build_packages]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_studio_can_build_packages
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_studio_can_build_packages
     artifact_paths:
       - "*.log"
     expeditor:
@@ -526,7 +526,7 @@ steps:
 
   - label: "[:windows: test_studio_can_build_packages]"
     command:
-      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 dev test_studio_can_build_packages
+      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 mac_m1_hab test_studio_can_build_packages
     artifact_paths:
       - "*.log"
     expeditor:
@@ -543,7 +543,7 @@ steps:
 
   - label: "[:windows: test_studio_can_build_packages_with_pkg_version_function]"
     command:
-      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 dev test_studio_can_build_packages_with_pkg_version_function
+      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 mac_m1_hab test_studio_can_build_packages_with_pkg_version_function
     artifact_paths:
       - "*.log"
     expeditor:
@@ -560,7 +560,7 @@ steps:
 
   - label: "[:windows: test_studio_can_build_scaffolded_package]"
     command:
-      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 dev test_studio_can_build_scaffolded_package
+      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 mac_m1_hab test_studio_can_build_scaffolded_package
     artifact_paths:
       - "*.log"
     expeditor:
@@ -577,7 +577,7 @@ steps:
 
   - label: "[:linux: test_studio_unmount_with_long_filesystem]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_studio_unmount_with_long_filesystem
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_studio_unmount_with_long_filesystem
     artifact_paths:
       - "*.log"
     env:
@@ -590,7 +590,7 @@ steps:
 
   - label: "[:linux: test_self_signed_cert_is_loaded_by_hab]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_self_signed_cert_is_loaded_by_hab
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_self_signed_cert_is_loaded_by_hab
     artifact_paths:
       - "*.log"
     expeditor:
@@ -602,7 +602,7 @@ steps:
 
   - label: "[:windows: test_windows_service_stops_on_launcher_termination]"
     command:
-      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 dev test_windows_service_stops_on_launcher_termination
+      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 mac_m1_hab test_windows_service_stops_on_launcher_termination
     artifact_paths:
       - "*.log"
     expeditor:
@@ -618,7 +618,7 @@ steps:
 
   - label: "[:windows: test_ssl_certificate_loading]"
     command:
-      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 dev test_ssl_certificate_loading
+      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 mac_m1_hab test_ssl_certificate_loading
     artifact_paths:
       - "*.log"
     expeditor:
@@ -635,7 +635,7 @@ steps:
 
   - label: "[:windows: test_pkg_install]"
     command:
-      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 dev test_pkg_install
+      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 mac_m1_hab test_pkg_install
     artifact_paths:
       - "*.log"
     expeditor:
@@ -652,7 +652,7 @@ steps:
 
   - label: "[:linux: test_pkg_install]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_pkg_install
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_pkg_install
     artifact_paths:
       - "*.log"
     expeditor:
@@ -664,7 +664,7 @@ steps:
 
   - label: "[:linux: test_pkg_download]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_pkg_download
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_pkg_download
     artifact_paths:
       - "*.log"
     expeditor:
@@ -676,7 +676,7 @@ steps:
 
   - label: "[:linux: test_pkg_bulkupload]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_pkg_bulkupload
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_pkg_bulkupload
     artifact_paths:
       - "*.log"
     expeditor:
@@ -690,7 +690,7 @@ steps:
 
   - label: "[:linux: test_simple_hooks]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_simple_hooks
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_simple_hooks
     artifact_paths:
       - "*.log"
     expeditor:
@@ -702,7 +702,7 @@ steps:
 
   - label: "[:windows: test_simple_hooks]"
     command:
-      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 dev test_simple_hooks
+      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 mac_m1_hab test_simple_hooks
     artifact_paths:
       - "*.log"
     expeditor:
@@ -718,7 +718,7 @@ steps:
 
   - label: "[:linux: test pids from Launcher with compatible Launcher]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_service_pids_come_from_new_launcher
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_service_pids_come_from_new_launcher
     artifact_paths:
       - "*.log"
     expeditor:
@@ -730,7 +730,7 @@ steps:
 
   - label: "[:linux: test service PID files with old Launcher]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_service_pids_written_to_file_using_old_launcher
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_service_pids_written_to_file_using_old_launcher
     artifact_paths:
       - "*.log"
     expeditor:
@@ -742,7 +742,7 @@ steps:
 
   - label: "[:linux: test_event_stream]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_event_stream
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_event_stream
     artifact_paths:
       - "*.log"
     expeditor:
@@ -755,7 +755,7 @@ steps:
 
   - label: "[:linux: test_at_once_service_updater]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_at_once_service_updater
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_at_once_service_updater
     artifact_paths:
       - "*.log"
     expeditor:
@@ -769,7 +769,7 @@ steps:
 
   - label: "[:linux: test_self_keep_latest_packages]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_self_keep_latest_packages
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_self_keep_latest_packages
     artifact_paths:
       - "*.log"
     expeditor:
@@ -781,7 +781,7 @@ steps:
 
   - label: "[:linux: test_pkg_uninstall]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_pkg_uninstall
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_pkg_uninstall
     artifact_paths:
       - "*.log"
     expeditor:
@@ -793,7 +793,7 @@ steps:
 
   - label: "[:linux: test_pkg_uninstall_hook]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_pkg_uninstall_hook
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_pkg_uninstall_hook
     artifact_paths:
       - "*.log"
     expeditor:
@@ -805,7 +805,7 @@ steps:
 
   - label: "[:windows: test_pkg_uninstall_hook]"
     command:
-      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 dev test_pkg_uninstall_hook
+      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 mac_m1_hab test_pkg_uninstall_hook
     artifact_paths:
       - "*.log"
     expeditor:
@@ -822,7 +822,7 @@ steps:
 
   - label: "[:linux: test_container_exporter]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_container_exporter
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_container_exporter
     artifact_paths:
       - "*.log"
     env:
@@ -835,7 +835,7 @@ steps:
 
   - label: "[:windows: test_container_exporter]"
     command:
-      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 dev test_container_exporter
+      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 mac_m1_hab test_container_exporter
     artifact_paths:
       - "*.log"
     env:
@@ -848,7 +848,7 @@ steps:
 
   - label: "[:linux: test_svc_update]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_svc_update
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_svc_update
     artifact_paths:
       - "*.log"
     env:
@@ -863,7 +863,7 @@ steps:
 
   - label: "[:windows: test_svc_update]"
     command:
-      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 dev test_svc_update
+      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 mac_m1_hab test_svc_update
     artifact_paths:
       - "*.log"
     env:
@@ -882,7 +882,7 @@ steps:
 
   - label: "[:linux: test_config_files]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_config_files
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_config_files
     artifact_paths:
       - "*.log"
     env:
@@ -897,7 +897,7 @@ steps:
 
   - label: "[:windows: test_config_files]"
     command:
-      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 dev test_config_files
+      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 mac_m1_hab test_config_files
     artifact_paths:
       - "*.log"
     env:
@@ -916,7 +916,7 @@ steps:
 
   - label: "[:linux: test_alternate_error_exit_codes]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_alternate_error_exit_codes
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_alternate_error_exit_codes
     artifact_paths:
       - "*.log"
     env:
@@ -931,7 +931,7 @@ steps:
 
   - label: "[:windows: test_alternate_error_exit_codes]"
     command:
-      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 dev test_alternate_error_exit_codes
+      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 mac_m1_hab test_alternate_error_exit_codes
     artifact_paths:
       - "*.log"
     env:
@@ -950,7 +950,7 @@ steps:
 
   - label: "[:linux: test_supplemental_groups]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_supplemental_groups
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_supplemental_groups
     artifact_paths:
       - "*.log"
     env:
@@ -964,7 +964,7 @@ steps:
 
   - label: "[:linux: test_license]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_license
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_license
     artifact_paths:
       - "*.log"
     env:
@@ -978,7 +978,7 @@ steps:
 
   - label: "[:linux: test_external_binaries]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_external_binaries
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_external_binaries
     artifact_paths:
       - "*.log"
     env:
@@ -993,7 +993,7 @@ steps:
 
   - label: "[:windows: test_external_binaries]"
     command:
-      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 dev test_external_binaries
+      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 mac_m1_hab test_external_binaries
     artifact_paths:
       - "*.log"
     env:
@@ -1012,7 +1012,7 @@ steps:
 
   - label: "[:linux: test_cli_config_file]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_cli_config_file
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_cli_config_file
     artifact_paths:
       - "*.log"
     env:
@@ -1027,7 +1027,7 @@ steps:
 
   - label: "[:linux: test_tls_ctl_gateway]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_tls_ctl_gateway
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_tls_ctl_gateway
     artifact_paths:
       - "*.log"
     env:
@@ -1042,7 +1042,7 @@ steps:
 
   - label: "[:linux: test_health_check_output_of_http_gateway]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_health_check_output_of_http_gateway
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_health_check_output_of_http_gateway
     artifact_paths:
       - "*.log"
     env:
@@ -1057,7 +1057,7 @@ steps:
 
   - label: "[:windows: test_health_check_output_of_http_gateway]"
     command:
-      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 dev test_health_check_output_of_http_gateway
+      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 mac_m1_hab test_health_check_output_of_http_gateway
     artifact_paths:
       - "*.log"
     env:
@@ -1073,7 +1073,7 @@ steps:
 
   - label: "[:linux: test_supervisor_lock_file_behavior]"
     command:
-      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh dev test_supervisor_lock_file_behavior
+      - bash .expeditor/scripts/end_to_end/run_e2e_test.sh mac_m1_hab test_supervisor_lock_file_behavior
     artifact_paths:
       - "*.log"
     env:
@@ -1088,7 +1088,7 @@ steps:
 
   - label: "[:windows: test_supervisor_lock_file_behavior]"
     command:
-      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 dev test_supervisor_lock_file_behavior
+      - powershell .expeditor/scripts/end_to_end/run_e2e_test.ps1 mac_m1_hab test_supervisor_lock_file_behavior
     artifact_paths:
       - "*.log"
     env:
